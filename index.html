@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>初始化精神污染...</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    color:#00ff88;
+    font-family:monospace;
+    overflow:hidden;
+}
+
+#terminal{
+    position:absolute;
+    top:10%;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    height:40%;
+    border:1px solid #00ff88;
+    padding:10px;
+    overflow:hidden;
+    font-size:14px;
+}
+
+button{
+    position:absolute;
+    bottom:20%;
+    left:50%;
+    transform:translateX(-50%);
+    background:black;
+    color:#00ff88;
+    border:1px solid #00ff88;
+    padding:15px 30px;
+    cursor:pointer;
+}
+
+.glitch{
+    animation:glitch 0.2s infinite;
+}
+
+@keyframes glitch{
+    0%{filter:hue-rotate(0deg);}
+    50%{filter:hue-rotate(180deg);}
+    100%{filter:hue-rotate(360deg);}
+}
+
+.trail{
+    position:absolute;
+    font-size:10px;
+    opacity:0.5;
+    pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<div id="terminal"></div>
+<button id="run">執行人生.exe</button>
+
+<script>
+
+const terminal = document.getElementById("terminal");
+const btn = document.getElementById("run");
+
+function randomString(){
+    return Math.random().toString(36).substring(2,10);
+}
+
+function fakeAPI(){
+    return {
+        status: Math.random()>0.5 ? 200 : 418,
+        data: randomString(),
+        meaning: Math.random()>0.7 ? "存在" : "不存在"
+    }
+}
+
+setInterval(()=>{
+    const line = document.createElement("div");
+    const api = fakeAPI();
+    line.innerText = "> " + randomString() + " | status:" + api.status + " | 意義:" + api.meaning;
+    terminal.appendChild(line);
+    terminal.scrollTop = terminal.scrollHeight;
+    if(terminal.childNodes.length>40){
+        terminal.removeChild(terminal.firstChild);
+    }
+},200);
+
+btn.addEventListener("mouseover",()=>{
+    if(Math.random()>0.13){
+        btn.style.left = Math.random()*80+"%";
+        btn.style.bottom = Math.random()*80+"%";
+    }
+});
+
+btn.addEventListener("click",()=>{
+    alert("系統警告：\n你已成功啟動自我懷疑模組。\n錯誤碼：87");
+});
+
+document.addEventListener("mousemove",(e)=>{
+    const span = document.createElement("span");
+    span.className="trail";
+    span.style.left=e.pageX+"px";
+    span.style.top=e.pageY+"px";
+    span.innerText=randomString();
+    document.body.appendChild(span);
+    setTimeout(()=>{span.remove();},500);
+});
+
+setInterval(()=>{
+    document.title = Math.random()>0.5 ? "系統正常" : "你確定？";
+    document.body.classList.toggle("glitch");
+},1500);
+
+setInterval(()=>{
+    if(Math.random()>0.8){
+        alert("哲學彈窗：\n當你關閉這個視窗，\n它是否也在關閉你？");
+    }
+},7000);
+
+document.addEventListener("keydown",(e)=>{
+    if(e.key==="F12"){
+        alert("不要偷看原始碼。\n原始碼也在看你。");
+    }
+});
+
+</script>
+
+</body>
+</html>
